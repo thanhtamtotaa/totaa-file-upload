@@ -16,7 +16,7 @@ class TotaaFileUploadServiceProvider extends ServiceProvider
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'totaa-file-upload');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'totaa-file-upload');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if ($this->app->runningInConsole()) {
