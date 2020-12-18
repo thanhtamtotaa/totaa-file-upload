@@ -1,0 +1,54 @@
+{
+    "name": "totaa/totaa-file-upload",
+    "description": "File upload manager system",
+    "keywords": [
+        "totaa",
+        "totaa-file-upload"
+    ],
+    "homepage": "https://github.com/totaa/totaa-file-upload",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Tho Thanh Tâm",
+            "email": "thanhtamtotaa@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Totaa\\TotaaFileUpload\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Totaa\\TotaaFileUpload\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Totaa\\TotaaFileUpload\\TotaaFileUploadServiceProvider"
+            ],
+            "aliases": {
+                "TotaaFileUpload": "Totaa\\TotaaFileUpload\\TotaaFileUploadFacade"
+            }
+        }
+    }
+}
