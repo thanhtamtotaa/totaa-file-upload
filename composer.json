@@ -5,7 +5,7 @@
         "totaa",
         "totaa-file-upload"
     ],
-    "homepage": "https://github.com/totaa/totaa-file-upload",
+    "homepage": "https://github.com/thanhtamtotaa/totaa-file-upload",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -16,8 +16,10 @@
         }
     ],
     "require": {
-        "php": "^7.1",
-        "illuminate/support": "^6.0"
+        "php": "^7.3|^8.0",
+        "illuminate/console": "^6.0|^7.0|^8.0",
+        "illuminate/contracts": "^6.0|^7.0|^8.0",
+        "illuminate/support": "^6.0|^7.0|^8.0"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
@@ -36,7 +38,6 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
         "sort-packages": true
