@@ -37,7 +37,7 @@ class GoogleDriveUpload implements ShouldQueue
     {
         $disk = Storage::disk('google');
 
-        $disk->put($this->fileUpload->local_path, fopen(Storage::disk('public')->path($this->fileUpload->local_path), 'r+'));
+        $disk->putStream($this->fileUpload->local_path, fopen(Storage::disk('public')->path($this->fileUpload->local_path), 'r+'), ["mimetype" => Storage::disk('public')->mimeType($this->fileUpload->local_path)]);
 
         Storage::disk('public')->delete($this->fileUpload->local_path);
 
