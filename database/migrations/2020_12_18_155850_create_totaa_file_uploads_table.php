@@ -17,7 +17,8 @@ class CreateTotaaFileUploadsTable extends Migration
             $table->bigIncrements('id');
             $table->string('drive', 100);
             $table->longText('local_path')->nullable()->default(null);
-            $table->longText('google_drive_path')->nullable()->default(null);
+            $table->longText('google_drive_virtual_path')->nullable()->default(null);
+            $table->longText('google_drive_display_path')->nullable()->default(null);
             $table->longText('google_drive_id')->nullable()->default(null);
             $table->boolean('active')->nullable()->default(true);
             $table->unsignedBigInteger('created_by')->nullable()->default(null);
