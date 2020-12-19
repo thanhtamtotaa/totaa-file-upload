@@ -2,13 +2,14 @@
 
 namespace Totaa\TotaaFileUpload\Traits;
 
-use Totaa\TotaaFileUpload\Models\FileUpload;
 use Livewire\TemporaryUploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Totaa\TotaaFileUpload\Models\FileUpload;
+use Totaa\TotaaFileUpload\Jobs\GoogleDriveUpload;
 
 trait TotaaFileUploadTraits
 {
-    protected $file_path, $temp_file, $file_name, $fileUpload;
+    protected $file_path, $temp_file, $file_name, $fileUpload, $local_path;
 
     public function save_to_drive(TemporaryUploadedFile $file, $path, $file_name)
     {
@@ -17,27 +18,40 @@ trait TotaaFileUploadTraits
         $this->file_name = $file_name;
         $this->saveAs();
         $this->put_to_db();
-        //dd($this->temp_file);
+        $this->add_jobs();
 
-        dd($this->fileUpload);
+        return $this->fileUpload->id;
     }
 
     protected function saveAs()
     {
-        $temp_filesss = $this->temp_file->storeAs($this->file_path, $this->file_name, ["disk" => "public"]);
-
-        dd(Storage::disk('local')->get('public/'.$temp_filesss),  $temp_filesss);
-
-        dd(public_path($temp_filesss));
+        $this->local_path = $temp_filesss = $this->temp_file->storeAs($this->file_path, $this->file_name, ["disk" => "public"]);
     }
 
     protected function put_to_db()
     {
         $FileUpload = FileUpload::create([
             "drive" => "public",
-            "local_path" => $this->file_path."/".$this->file_name,
+            "local_path" => $this->local_path,
         ]);
 
         $this->fileUpload = $FileUpload;
+    }
+
+    protected function add_jobs()
+    {
+        GoogleDriveUpload::dispatch($this->fileUpload);
+    }
+
+    public function get_url($id)
+    {
+        $this->fileUpload = FileUpload::find($id);
+
+        if ($this->fileUpload->drive == "public") {
+            $path = $this->fileUpload->local_path;
+        } else {
+            $path = $this->fileUpload->google_drive_display_path;
+        }
+        return Storage::disk($this->fileUpload->drive)->url($path);
     }
 }
