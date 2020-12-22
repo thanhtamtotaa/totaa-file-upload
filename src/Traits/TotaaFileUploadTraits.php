@@ -11,7 +11,7 @@ trait TotaaFileUploadTraits
 {
     protected $file_path, $temp_file, $file_name, $fileUpload, $local_path;
 
-    protected $TotaaFileUploadStep = [], $TotaaFileUploadMethod = NULL, $TotaaFileId = NULL, $TotaaFileSubmit = false;
+    public $TotaaFileUploadStep = [], $TotaaFileUploadMethod = NULL, $TotaaFileId = NULL, $TotaaFileSubmit = false;
 
     public function Update_TotaaFileUploadStep($model, $step)
     {
