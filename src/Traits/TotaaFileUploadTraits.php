@@ -11,6 +11,52 @@ trait TotaaFileUploadTraits
 {
     protected $file_path, $temp_file, $file_name, $fileUpload, $local_path;
 
+    public $TotaaFileUploadStep = [], $TotaaFileUploadMethod = NULL, $TotaaFileId = NULL, $TotaaFileSubmit = false;
+
+    public function Update_TotaaFileUploadStep($model, $step)
+    {
+        $this->TotaaFileUploadStep[$model] = $step;
+
+        if ($this->TotaaFileSubmit && $step ==4) {
+            $array_count = array_count_values($this->TotaaFileUploadStep);
+            $count = 0;
+            if (array_key_exists(3, $array_count)) {
+                $count += $array_count[3];
+            }
+            if (array_key_exists(4, $array_count)) {
+                $count += $array_count[4];
+            }
+            if (count($this->TotaaFileUploadStep) == $count) {
+                $this->emit($this->TotaaFileUploadMethod, $this->TotaaFileId);
+                $this->TotaaFileUploadMethod = NULL;
+                $this->TotaaFileId = NULL;
+                $this->TotaaFileSubmit = false;
+            }
+        }
+    }
+
+    public function TotaaFileUploadSubmit($method, $id = NULL)
+    {
+        $this->TotaaFileUploadMethod = $method;
+        $this->TotaaFileId = $id;
+        $this->TotaaFileSubmit = true;
+
+        $array_count = array_count_values($this->TotaaFileUploadStep);
+        $count = 0;
+        if (array_key_exists(3, $array_count)) {
+            $count += $array_count[3];
+        }
+        if (array_key_exists(4, $array_count)) {
+            $count += $array_count[4];
+        }
+        if (count($this->TotaaFileUploadStep) == $count) {
+            $this->emit($this->TotaaFileUploadMethod, $this->TotaaFileId);
+            $this->TotaaFileUploadMethod = NULL;
+            $this->TotaaFileId = NULL;
+            $this->TotaaFileSubmit = false;
+        }
+    }
+
     public function save_to_drive(TemporaryUploadedFile $file, $path, $file_name)
     {
         $this->temp_file = $file;
