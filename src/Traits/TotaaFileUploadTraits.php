@@ -57,7 +57,7 @@ trait TotaaFileUploadTraits
         }
     }
 
-    public function save_to_drive(TemporaryUploadedFile $file, $path, $file_name)
+    protected function save_to_drive(TemporaryUploadedFile $file, $path, $file_name)
     {
         $this->temp_file = $file;
         $this->file_path = $path;
