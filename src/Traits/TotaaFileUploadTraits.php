@@ -18,20 +18,7 @@ trait TotaaFileUploadTraits
         $this->TotaaFileUploadStep[$model] = $step;
 
         if ($this->TotaaFileSubmit && $step ==4) {
-            $array_count = array_count_values($this->TotaaFileUploadStep);
-            $count = 0;
-            if (array_key_exists(3, $array_count)) {
-                $count += $array_count[3];
-            }
-            if (array_key_exists(4, $array_count)) {
-                $count += $array_count[4];
-            }
-            if (count($this->TotaaFileUploadStep) == $count) {
-                $this->emit($this->TotaaFileUploadMethod, $this->TotaaFileId);
-                $this->TotaaFileUploadMethod = NULL;
-                $this->TotaaFileId = NULL;
-                $this->TotaaFileSubmit = false;
-            }
+            $this->check_upload();
         }
     }
 
@@ -40,20 +27,28 @@ trait TotaaFileUploadTraits
         $this->TotaaFileUploadMethod = $method;
         $this->TotaaFileId = $id;
         $this->TotaaFileSubmit = true;
+        $this->check_upload();
+    }
 
+    protected function check_upload()
+    {
         $array_count = array_count_values($this->TotaaFileUploadStep);
         $count = 0;
+
         if (array_key_exists(3, $array_count)) {
             $count += $array_count[3];
         }
+
         if (array_key_exists(4, $array_count)) {
             $count += $array_count[4];
         }
+
         if (count($this->TotaaFileUploadStep) == $count) {
             $this->emit($this->TotaaFileUploadMethod, $this->TotaaFileId);
             $this->TotaaFileUploadMethod = NULL;
             $this->TotaaFileId = NULL;
             $this->TotaaFileSubmit = false;
+            $this->TotaaFileUploadStep = [];
         }
     }
 
