@@ -45,6 +45,8 @@ class GoogleDriveUpload implements ShouldQueue
 
         $metadata = $adapter->getMetadata($this->fileUpload->local_path);
 
+        $disk->setVisibility($metadata["display_path"], 'public');
+
         $getFileObject = $adapter->getFileObject($metadata["virtual_path"]);
 
         $this->fileUpload->update([
