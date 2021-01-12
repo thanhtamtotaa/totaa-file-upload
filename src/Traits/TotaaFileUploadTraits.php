@@ -69,6 +69,11 @@ trait TotaaFileUploadTraits
         $this->local_path = $temp_filesss = $this->temp_file->storeAs($this->file_path, $this->file_name, ["disk" => "public"]);
     }
 
+    protected function delete(TemporaryUploadedFile $file)
+    {
+        $file->delete();
+    }
+
     protected function put_to_db()
     {
         $FileUpload = FileUpload::create([
